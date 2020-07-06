@@ -14,7 +14,13 @@ class CreatePostLikeTable extends Migration
     public function up()
     {
         Schema::create('post_like', function (Blueprint $table) {
-            $table->id();
+            $table->primary(['post_id', 'user_id']);
+            $table->unsignedInteger('post_id');
+            $table->unsignedInteger('user_id');
+
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
