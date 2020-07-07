@@ -12,16 +12,23 @@ class CommentController extends Controller
         $comment->user_id = Auth::id();
         $comment->post_id = $post_id;
         $comment->comment = $request->comment;
-        $comment->save();
+        $save = $comment->save();
 
-        return response()->json([
+        if ($save) {
+          return response()->json([
             'error' => false,
             'status' => 'Berhasil disimpan'
-        ]);
+          ]);
+        } else {
+          return response()->json([
+            'error' => true,
+            'status' => 'Gagal disimpan'
+          ]);
+        }
     }
 
     public function find($post_id) {
-        $comment = Comment::find($post_id);
+        $comment = Comment::where('post_id', $post_id)->get();
 
         return response()->json([
             'error' => false,
@@ -32,11 +39,18 @@ class CommentController extends Controller
 
     public function delete($post_id) {
         $comment = Comment::find($post_id);
-        $comment->delete();
+        $delete = $comment->delete();
 
-        return response()->json([
+        if ($delete) {
+          return response()->json([
             'error' => false,
             'status' => 'Berhasil dihapus'
-        ]);
+          ]);
+        } else {
+          return response()->json([
+            'error' => true,
+            'status' => 'Gagal dihapus'
+          ]);
+        }
     }
 }
