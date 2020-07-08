@@ -24,3 +24,9 @@ Route::post('register', 'API\UserController@register');
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'API\UserController@details');
 });
+
+Route::get('post', 'PostController@index');
+Route::get('post/{id}', 'PostController@find');
+Route::post('post', 'PostController@create');
+Route::put('post/{id}', 'PostController@update');
+Route::delete('post/{id}', 'PostController@delete');
