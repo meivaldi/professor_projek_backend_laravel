@@ -30,3 +30,9 @@ Route::get('post/{id}', 'PostController@find');
 Route::post('post', 'PostController@create');
 Route::put('post/{id}', 'PostController@update');
 Route::delete('post/{id}', 'PostController@delete');
+
+Route::get('tag', 'TagController@index');
+Route::get('tag/{id}', 'TagController@show');
+Route::post('tag', 'TagController@create');
+Route::put('tag/{id}', 'TagController@update');
+Route::delete('tag/{id}', 'TagController@delete');
