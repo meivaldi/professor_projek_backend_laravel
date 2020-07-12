@@ -83,13 +83,4 @@ class PostController extends Controller
         ]);
       }
     }
-
-    public function add_tag(Request $request, $id) {
-        $post = Post::where('id',$id)->with('tag')->get();
-        //$like = $post->tags()->attach($request->tag);
-
-        return response()->json([
-            'status' => $post->tags
-        ]);
-    }
 }

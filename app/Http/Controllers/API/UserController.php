@@ -51,9 +51,9 @@ class UserController extends Controller {
     }
 
     $input = $request->all(); 
-    $input['password'] = bcrypt($input['password']); 
+    $input['password'] = bcrypt($input['password']);
     $user = User::create($input); 
-    $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+    $success['token'] =  $user->createToken('MyApp')->accessToken; 
     $success['name'] =  $user->name;
 
     return response()->json(['success'=>$success], $this-> successStatus); 
@@ -65,8 +65,32 @@ class UserController extends Controller {
   * @return \Illuminate\Http\Response 
   */ 
   public function details() { 
-    $user = Auth::user(); 
+    $user = Auth::user();
     return response()->json(['success' => $user], $this-> successStatus); 
   } 
+
+  public function logout() {
+    if (Auth::check()) {
+
+      $status = Auth::user()->token()->revoke();
+
+      if ($status) {
+        return response()->json([
+         'error' => false,
+         'status' => "Berhasil logout"
+        ]);
+      } else {
+        return response()->json([
+        'error' => true,
+        'status' => "Gagal logout"
+      ]);
+      }
+    } else {
+      return response()->json([
+        'error' => true,
+        'status' => "Gagal logout"
+      ]);
+    }
+  }
 
 }

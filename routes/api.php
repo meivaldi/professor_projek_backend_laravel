@@ -21,21 +21,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 
-// Route::group(['middleware' => 'auth:api'], function(){
-//     Route::post('details', 'API\UserController@details');
-// });
+Route::group(['middleware' => ['auth:api']], function(){
+    Route::post('details', 'API\UserController@details');
+    Route::post('logout', 'API\UserController@logout');
+});
 
-Route::post('details', 'API\UserController@details');
+Route::group(['middleware' => ['auth:api', 'check.auth']], function(){
+    Route::get('post', 'PostController@index');
+    Route::get('post/{id}', 'PostController@find');
+    Route::post('post', 'PostController@create');
+    Route::put('post/{id}', 'PostController@update');
+    Route::delete('post/{id}', 'PostController@delete');
 
-Route::get('post', 'PostController@index');
-Route::get('post/{id}', 'PostController@find');
-Route::post('post', 'PostController@create');
-Route::put('post/{id}', 'PostController@update');
-Route::delete('post/{id}', 'PostController@delete');
-Route::post('add_tag/{id}', 'PostController@add_tag');
-
-Route::get('tag', 'TagController@index');
-Route::get('tag/{id}', 'TagController@show');
-Route::post('tag', 'TagController@create');
-Route::put('tag/{id}', 'TagController@update');
-Route::delete('tag/{id}', 'TagController@delete');
+    Route::get('tag', 'TagController@index');
+    Route::get('tag/{id}', 'TagController@show');
+    Route::post('tag', 'TagController@create');
+    Route::put('tag/{id}', 'TagController@update');
+    Route::delete('tag/{id}', 'TagController@delete');
+});

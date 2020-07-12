@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('email');
             $table->string('password');
+            $table->enum('tipe', ['0', '1']);
             $table->timestamps();
         });
     }
