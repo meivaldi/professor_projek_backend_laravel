@@ -24,11 +24,11 @@ Route::post('register', 'API\UserController@register');
 Route::group(['middleware' => ['auth:api']], function(){
     Route::post('details', 'API\UserController@details');
     Route::post('logout', 'API\UserController@logout');
+    Route::post('post/like/{id}', 'PostController@like');
+    Route::post('comment/{id}', 'CommentController@create');
 });
 
 Route::group(['middleware' => ['auth:api', 'check.auth']], function(){
-    Route::get('post', 'PostController@index');
-    Route::get('post/{id}', 'PostController@find');
     Route::post('post', 'PostController@create');
     Route::put('post/{id}', 'PostController@update');
     Route::delete('post/{id}', 'PostController@delete');
@@ -38,4 +38,9 @@ Route::group(['middleware' => ['auth:api', 'check.auth']], function(){
     Route::post('tag', 'TagController@create');
     Route::put('tag/{id}', 'TagController@update');
     Route::delete('tag/{id}', 'TagController@delete');
+
+    Route::post('post/add_tag/{id}', 'PostController@add_tag');
 });
+
+Route::get('post', 'PostController@index');
+Route::get('post/{id}', 'PostController@find');

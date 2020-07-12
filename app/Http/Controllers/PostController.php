@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -80,6 +83,44 @@ class PostController extends Controller
         return response()->json([
           'error' => true,
           'status' => 'Gagal dihapus'
+        ]);
+      }
+    }
+
+    public function like($id) {
+      $post = Post::find($id);
+      $user = Auth::user();
+
+      $like = $post->likes()->save($user);
+
+      if ($like) {
+        return response()->json([
+          'error' => false,
+          'status' => 'Berhasil dilike'
+        ]);
+      } else {
+        return response()->json([
+          'error' => true,
+          'status' => 'Gagal dilike'
+        ]);
+      }
+    }
+
+    public function add_tag(Request $request, $id) {
+      $post = Post::find($id);
+      $tag = Tag::find($request->tag);
+
+      $tags = $post->tags()->save($tag);
+
+      if ($tags) {
+        return response()->json([
+          'error' => false,
+          'status' => 'Berhasil ditambah'
+        ]);
+      } else {
+        return response()->json([
+          'error' => true,
+          'status' => 'Gagal ditambah'
         ]);
       }
     }

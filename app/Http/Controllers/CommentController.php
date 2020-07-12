@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Comment;
 
 class CommentController extends Controller
 {
     public function create(Request $request, $post_id) {
         $comment = new Comment;
-        $comment->user_id = Auth::id();
+        $comment->user_id = Auth::user()->id;
         $comment->post_id = $post_id;
         $comment->comment = $request->comment;
         $save = $comment->save();
