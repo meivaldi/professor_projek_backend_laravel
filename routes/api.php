@@ -32,6 +32,7 @@ Route::get('post/{id}', 'PostController@find');
 Route::post('post', 'PostController@create');
 Route::put('post/{id}', 'PostController@update');
 Route::delete('post/{id}', 'PostController@delete');
+Route::post('add_tag/{id}', 'PostController@add_tag');
 
 Route::get('tag', 'TagController@index');
 Route::get('tag/{id}', 'TagController@show');
